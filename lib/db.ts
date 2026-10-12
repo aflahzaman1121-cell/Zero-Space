@@ -14,7 +14,9 @@ async function open(): Promise<DB> {
   let db: DB;
   if (url) {
     const postgres = (await import("postgres")).default;
-    const sql = postgres(url, { max: 5, prepare: false, ssl: url.includes("localhost") ? false : "require" });
+    // postgres.js would otherwise store our pre-stringified JSON as a JSON *string*. Pass strings through untouched.
+    const types = { jsonb: { to: 3802, from: [3802], serialize: (x: unknown) => (typeof x === "string" ? x : JSON.stringify(x)), parse: (x: string) => JSON.parse(x) } };
+    const sql = postgres(url, { max: 5, prepare: false, ssl: url.includes("localhost") ? false : "require", types });
     const wrap = (s: any): DB => ({
       query: async (text, params = []) => (await s.unsafe(text, params)) as any,
       tx: (fn) => s.begin((t: any) => fn(wrap(t))),
