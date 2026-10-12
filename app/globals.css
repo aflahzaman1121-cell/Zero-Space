@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+body { background: #F5F3EE; color: #14162B; font-family: Outfit, Poppins, system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+.cut { clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%); }
+.card { @apply bg-white rounded-2xl p-4 shadow-sm; }
+.btn { @apply inline-flex items-center justify-center rounded-xl px-5 min-h-[48px] font-semibold text-[15px] transition active:scale-[.98] disabled:opacity-50; }
+.btn-primary { @apply bg-blue text-white hover:bg-blue-600; }
+.btn-ignite { @apply bg-ignite text-white hover:brightness-95; }
+.btn-ghost { @apply bg-white text-blue border-2 border-lilac hover:bg-lilac/30; }
+.input { @apply w-full min-h-[48px] rounded-xl border-2 border-lilac bg-white px-4 text-[16px] outline-none focus:border-blue; }
+.label { @apply block text-sm font-medium text-slate mb-1; }
+.pill { @apply inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-lilac text-blue; }
+.pill-o { @apply bg-[#FFE3D6] text-[#B8420F]; }
+.pill-g { @apply bg-[#DDF5E6] text-[#17693A]; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  .card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+  main { max-width: 100% !important; padding: 0 !important; }
+}

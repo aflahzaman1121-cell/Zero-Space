@@ -1,0 +1,19 @@
+import { NextResponse } from "next/server";
+import { apiUser } from "@/lib/auth";
+import { getDB } from "@/lib/db";
+import { saveProgress, submitAttempt } from "@/lib/service";
+
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const u = await apiUser("student");
+  if (!u) return NextResponse.json({ error: "Please sign in again." }, { status: 401 });
+  const { id } = await params;
+  const b = await req.json().catch(() => ({}));
+  const db = await getDB();
+  try {
+    // Save the final answers first, then submit.
+    if (b.answers) await saveProgress(db, u.id, { attemptId: id, answers: b.answers, timeDelta: b.timeDelta ?? {}, blurs: Number(b.blurs) || 0 });
+    return NextResponse.json(await submitAttempt(db, u.id, id));
+  } catch (e) {
+    return NextResponse.json({ error: (e as Error).message }, { status: 400 });
+  }
+}

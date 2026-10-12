@@ -1,0 +1,58 @@
+// Demo content: 12 Management Accounting questions with a misconception tag on every wrong option.
+type W = Record<string, { tag: string; explain: string }>;
+export type DemoQ = { topic: string; chapter: string; difficulty: "easy" | "medium" | "hard"; text: string; options: string[]; correct: number; solution: string; wrong: W };
+
+const CH = "Cost accounting techniques";
+export const DEMO_QUESTIONS: DemoQ[] = [
+  // Cost classification
+  { topic: "Cost classification", chapter: CH, difficulty: "easy", text: "A factory pays rent of ₹50,000 a month whether it makes 100 or 1,000 units. How is this cost best described?",
+    options: ["Variable cost", "Fixed cost", "Semi-variable cost", "Stepped cost"], correct: 1,
+    solution: "The cost stays the same in total across the output range, so it is a fixed cost.",
+    wrong: { "0": { tag: "Treated a fixed cost as variable", explain: "Variable costs change with output; this rent does not." }, "2": { tag: "Called a pure fixed cost semi-variable", explain: "Semi-variable costs have a variable part; this rent has none." }, "3": { tag: "Confused fixed with stepped cost", explain: "Stepped costs jump at output thresholds; this rent never changes." } } },
+  { topic: "Cost classification", chapter: CH, difficulty: "easy", text: "Which of these is a direct cost of making shirts?",
+    options: ["Salary of the factory supervisor", "Cotton cloth used in the shirts", "Electricity for the factory", "Depreciation of the machines"], correct: 1,
+    solution: "Cloth can be traced to each shirt, so it is a direct material cost. The others are overheads.",
+    wrong: { "0": { tag: "Treated indirect labour as direct", explain: "A supervisor works on all products, so the cost is an overhead." }, "2": { tag: "Treated an overhead as direct", explain: "Factory electricity cannot be traced to a single shirt." }, "3": { tag: "Treated an overhead as direct", explain: "Depreciation is shared across all output, so it is an overhead." } } },
+  { topic: "Cost classification", chapter: CH, difficulty: "medium", text: "An electricity bill is ₹2,000 a month fixed plus ₹3 for every unit used. How is this cost best described?",
+    options: ["Fixed cost", "Variable cost", "Semi-variable cost", "Stepped cost"], correct: 2,
+    solution: "It has a fixed part and a variable part, so it is semi-variable (mixed).",
+    wrong: { "0": { tag: "Ignored the variable element", explain: "The ₹3 per unit part rises with usage." }, "1": { tag: "Ignored the fixed element", explain: "The ₹2,000 is paid even at zero usage." }, "3": { tag: "Confused semi-variable with stepped", explain: "Stepped costs jump at thresholds; this one rises smoothly." } } },
+  { topic: "Cost classification", chapter: CH, difficulty: "medium", text: "Total cost rises in direct proportion to output, and the cost per unit stays the same. Which type of cost is this?",
+    options: ["Fixed cost", "Variable cost", "Sunk cost", "Opportunity cost"], correct: 1,
+    solution: "Constant per unit and proportional in total is the definition of a variable cost.",
+    wrong: { "0": { tag: "Mixed up total and per-unit behaviour", explain: "A fixed cost is constant in total, so its cost per unit falls as output rises." }, "2": { tag: "Confused behaviour with decision relevance", explain: "Sunk cost describes money already spent, not how cost moves with output." }, "3": { tag: "Confused behaviour with decision relevance", explain: "Opportunity cost is the benefit given up, not how cost moves with output." } } },
+  // Absorption costing
+  { topic: "Absorption costing", chapter: CH, difficulty: "easy", text: "Budgeted overheads are ₹120,000 and budgeted machine hours are 6,000. What is the overhead absorption rate per machine hour?",
+    options: ["₹0.05", "₹20", "₹126,000", "₹6,000"], correct: 1,
+    solution: "120,000 ÷ 6,000 = ₹20 per machine hour.",
+    wrong: { "0": { tag: "Inverted the absorption formula", explain: "The rate is overheads ÷ hours, not hours ÷ overheads." }, "2": { tag: "Added instead of dividing", explain: "The rate comes from dividing overheads by hours." }, "3": { tag: "Gave the hours, not the rate", explain: "6,000 is the activity base; the rate is overheads divided by it." } } },
+  { topic: "Absorption costing", chapter: CH, difficulty: "medium", text: "Actual overheads were ₹130,000 and overheads absorbed were ₹125,000. What is the result?",
+    options: ["₹5,000 over-absorbed", "₹5,000 under-absorbed", "₹255,000 under-absorbed", "₹255,000 over-absorbed"], correct: 1,
+    solution: "Less was absorbed than was spent, so overheads are under-absorbed by 5,000.",
+    wrong: { "0": { tag: "Reversed under- and over-absorption", explain: "Absorbed below actual means under-absorbed." }, "2": { tag: "Added the two figures", explain: "The difference between actual and absorbed is what matters." }, "3": { tag: "Added the two figures", explain: "The difference between actual and absorbed is what matters." } } },
+  { topic: "Absorption costing", chapter: CH, difficulty: "medium", text: "Under absorption costing, fixed production overheads are:",
+    options: ["Written off in the period they are incurred", "Included in the value of inventory", "Left out of the cost of units", "Treated as selling costs"], correct: 1,
+    solution: "Absorption costing puts fixed production overheads into unit cost, so unsold units carry them in inventory.",
+    wrong: { "0": { tag: "Described marginal costing instead", explain: "Marginal costing writes fixed overheads off in the period." }, "2": { tag: "Left out fixed overhead like marginal costing", explain: "Absorption costing includes them in unit cost." }, "3": { tag: "Confused production and selling overheads", explain: "These are production overheads, not selling costs." } } },
+  { topic: "Absorption costing", chapter: CH, difficulty: "hard", text: "A firm makes 1,000 units and sells 800 with no opening inventory. Fixed production overhead is ₹20,000. Compared with marginal costing, absorption costing profit is:",
+    options: ["₹4,000 lower", "₹4,000 higher", "₹20,000 higher", "The same"], correct: 1,
+    solution: "200 unsold units hold 200 × ₹20 = ₹4,000 of fixed overhead in inventory, so absorption profit is ₹4,000 higher.",
+    wrong: { "0": { tag: "Reversed the direction of the profit difference", explain: "When inventory rises, absorption costing profit is higher." }, "2": { tag: "Used total fixed overhead instead of the stock share", explain: "Only the overhead on unsold units, ₹4,000, moves to inventory." }, "3": { tag: "Assumed both methods give the same profit", explain: "They differ whenever inventory levels change." } } },
+  // Break-even
+  { topic: "Break-even analysis", chapter: CH, difficulty: "easy", text: "Selling price is ₹50 a unit and variable cost is ₹30 a unit. What is the contribution per unit?",
+    options: ["₹80", "₹20", "₹30", "₹50"], correct: 1,
+    solution: "Contribution = selling price − variable cost = 50 − 30 = ₹20.",
+    wrong: { "0": { tag: "Added instead of subtracting", explain: "Contribution is selling price minus variable cost." }, "2": { tag: "Gave the variable cost", explain: "30 is the variable cost, not the contribution." }, "3": { tag: "Gave the selling price", explain: "50 is the selling price; contribution is what is left after variable cost." } } },
+  { topic: "Break-even analysis", chapter: CH, difficulty: "medium", text: "Fixed costs are ₹40,000 and contribution is ₹20 a unit. What is the break-even point in units?",
+    options: ["800", "1,333", "2,000", "20"], correct: 2,
+    solution: "Break-even units = fixed costs ÷ contribution per unit = 40,000 ÷ 20 = 2,000.",
+    wrong: { "0": { tag: "Divided by selling price instead of contribution", explain: "40,000 ÷ 50 = 800 uses the wrong divisor." }, "1": { tag: "Divided by variable cost instead of contribution", explain: "40,000 ÷ 30 uses the wrong divisor." }, "3": { tag: "Stopped at the contribution per unit", explain: "20 is the contribution; the break-even point still needs fixed costs divided by it." } } },
+  { topic: "Break-even analysis", chapter: CH, difficulty: "medium", text: "Budgeted sales are 3,000 units and the break-even point is 2,000 units. What is the margin of safety in units?",
+    options: ["5,000", "1,000", "2,000", "3,000"], correct: 1,
+    solution: "Margin of safety = budgeted sales − break-even sales = 3,000 − 2,000 = 1,000 units.",
+    wrong: { "0": { tag: "Added instead of subtracting", explain: "Margin of safety is budgeted sales minus break-even sales." }, "2": { tag: "Gave the break-even point", explain: "2,000 is the break-even point, not the margin above it." }, "3": { tag: "Gave the budgeted sales", explain: "3,000 is the budget; the margin of safety is the part above break-even." } } },
+  { topic: "Break-even analysis", chapter: CH, difficulty: "hard", text: "Fixed costs are ₹40,000, the target profit is ₹10,000 and contribution is ₹20 a unit. How many units must be sold?",
+    options: ["2,000", "2,500", "500", "1,500"], correct: 1,
+    solution: "Units = (fixed costs + target profit) ÷ contribution = 50,000 ÷ 20 = 2,500.",
+    wrong: { "0": { tag: "Ignored the target profit", explain: "2,000 only covers the fixed costs; the profit target needs extra units." }, "2": { tag: "Used only the target profit", explain: "10,000 ÷ 20 ignores the fixed costs that must be covered first." }, "3": { tag: "Subtracted the profit instead of adding", explain: "Profit is an extra amount to earn, so it is added to fixed costs." } } },
+];
